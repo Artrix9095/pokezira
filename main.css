@@ -1,0 +1,18 @@
+.dark-body {
+    background-color: #223;
+    color: #aab;
+}
+.dark-tag{
+    color: #aab 
+}
+.dark-tag:hover,
+.dark-icon{
+    color: #79e;
+}
+.dark-btn-purple{
+    background-color: #79e;
+    color: #aab;
+}
+.jumbotron{
+    background-color: #223;
+}
