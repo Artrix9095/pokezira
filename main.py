@@ -35,7 +35,7 @@ def strgen():
 
 with open('pos.json', 'r') as f:
     payload = json.load(f)
-
+print(payload)
 def write():
     with open('pos.json', 'w') as f:
         print('Changes have been made to the storage')
