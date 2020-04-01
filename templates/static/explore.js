@@ -1,46 +1,18 @@
-mapAbove = new Image();
-mapBase = new Image();
-mapNight = new Image();
-mapAbove.onload = loadedMapImage;
-mapBase.onload = loadedMapImage;
-mapAbove.src=cdn+'/maps/' +mapCode+ ' above.png';
-mapBase.src=cdn+'/maps/' +mapCode+ ' base.png';
-mapNight.src = cdn+'/images/night.png';
-		
 $(document).ready(function() {
-  this.keyState = new Object;
-  this.keyState.up = false;
-  this.keyState.down = false;
-  this.keyState.left = false;
-});
 
-(function(){
-      $("#keyUp").bind('touchstart', function(ev) {
-        keyState.up = true; return false;
-      });
-			$("#keyUp").bind("touchend", function(ev) {
-        this.keyState.up = false; return false;
-        });
-			
-			$("#keyLeft").bind('touchstart', function(ev) {
-        this.keyState.left = true; return false;
-        });
-			$("#keyLeft").bind("touchend", function(ev) {
-        this.keyState.left = false; return false;
-      });
-			
-			$("#keyRight").bind('touchstart', function(ev) {
-        this.keyState.right = true; return false;
-        });
-			$("#keyRight").bind("touchend", function(ev) {
-        this.keyState.right = false; return false;
-      });
-			
-			$("#keyDown").bind('touchstart', function(ev) {
-        this.keyState.down = true; return false;
-      });
-			$("#keyDown").bind("touchend", function(ev) {
-        this.keyState.down = false; return false;
-      });
+    //curMonImage = document.getElementById("curMonImage");
+    //curOppImage = document.getElementById("curOppImage");
+
+    var c = document.getElementById("cvsGame");
+    ctx = c.getContext("2d");
+
+    ctx.canvas.width = $("#mws-explore-area").innerWidth();
+    ctx.canvas.height = $("#mws-explore-area").innerHeight();
+
+    cvsWidth = Math.floor(ctx.canvas.width / 16 + 1) * 16;
+    cvsHeight = Math.floor(ctx.canvas.height / 16 + 1) * 16;
+
+    if (cvsWidth > 1024) {
+        cvsWidth = 1024;
+    }
 });
-			

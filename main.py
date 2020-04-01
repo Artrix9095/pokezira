@@ -1,30 +1,60 @@
+
+
+import battle
+#Imports
+
 import util as u1
+# Importing our util.py as a module
 
-from flask_socketio import SocketIO, send
+from data import trade
 
-from wtforms import Form, StringField, TextAreaField, PasswordField, validators
-
-from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, send_from_directory, send_file
-from threading import Thread
-
-from passlib.hash import sha256_crypt as crypt
-
-import sqlite3
-
-import random as rand
-
-import json
-
-import requests
-
-import time
-
-import os
-os.system('readlink -f favicon.png')
 
 from functools import wraps
+# We need wraps for troubleshooting and data checking
+
+from flask_socketio import SocketIO, send # Socketio for interraction between multiple users
+
+from wtforms import Form, StringField, TextAreaField, PasswordField, validators
+# WTF for post requests and input management, used for login 
+
+from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, send_from_directory, send_file
+# The host, Flask itself
+
+from threading import Thread
+# Threading so we can make the server faster
+
+from passlib.hash import sha256_crypt as crypt
+# Encrypting passwords, and valuable data to nonreadable characters to keep hackers away
+
+import sqlite3
+# Sqlite Database for user data (faster database but takes more work to use)
+
+import random as rand
+# Random for random choices used for strgen, idgen() and ivgen()
+
+import json
+# Easier to use database but slow and is likely to break if it gets too big
+
+import requests
+# Reqeusts for grappnig pokemon data from our pokemon data source 'https://Pokeapi.co'
+
+import time
+# For future projects when the system time is needed to determine if its night/day in the game
+
+import os
+# Os is uses for file management and useage of the server console, very useful
+
+
+#Code
+
+os.system('readlink -f favicon.png') # Checking the path of a file so we can use it since this isn't our pc and we dont know the file folder
+
+
+
+
 
 def strgen():
+  """Generates a random string"""
   oof = ""
   for x in list(str(123456789)):
     from string import ascii_uppercase
@@ -32,15 +62,23 @@ def strgen():
     oof += str(rand.choice(uper))
   return oof
     
-
+#Opens one of 2 databases this one is json(should be converted into sqlite when the game gets bigger since json files can break when they get too big)
 with open('pos.json', 'r') as f:
     payload = json.load(f)
-print(payload)
+
+
+
 def write():
+    """Writing to the json file that i mentioned above"""
     with open('pos.json', 'w') as f:
         print('Changes have been made to the storage')
         json.dump(payload, f, indent=4)
+
+
+
+
 def is_logged_in(f):
+    """Checks if a user is logged in"""
     @wraps(f)
     def wrap(*args, **kwargs):
         if 'access' in session:
@@ -49,7 +87,12 @@ def is_logged_in(f):
             flash('Unauthorized, Please login', 'danger')
             return redirect(url_for('login'))
     return wrap
+
+
+
+
 def is_new(f):
+    """Checks if a user is new to the game"""
     @wraps(f)
     def wrap(*args, **kwargs):
         if payload[session["id"]]["New"]:
@@ -59,10 +102,19 @@ def is_new(f):
             return f(*args, **kwargs)
     return wrap
 
+
+
+
 def getapi():
+    """Makes a request to pull data from our pokemon data source 'https://pokeapi.co'"""
     r = requests.get('https://pokeapi.co/api/v2/pokemon?limit=964')
     return r.json()["results"]
+
+
+
+
 def addmon():
+    """Add a pokemon to the database"""
     m = getapi()
     run = 0
     rest = 0
@@ -84,9 +136,18 @@ def addmon():
 #----------------------=-----------------#
 #----------------------=-----------------#
 #----------------------=-----------------#
+
+
 bot = Flask(__name__)
+
+trade.init(bot)
+
 print(os.listdir('/home/runner/Pokezira/templates/static/'))
 socketio = SocketIO(bot)
+
+
+
+
 @bot.route('/cdn/sprite/<folder>/<sprite>')
 def spritess(folder, sprite):
   return send_file('/home/runner/Pokezira/Pokezira sprites V1/'+folder+"/"+sprite, mimetype="image/png")
@@ -97,9 +158,16 @@ def spritess(folder, sprite):
 
 
 
+
 def err(template, msg, name):
+    """Adds a error message to a template"""
     return render_template(template, error=msg, name=name)
+
+
+
+
 def idgen():
+    """Generates a random Id used for each user"""
     run = 0
     cur = ''
     while 9 > run:
@@ -129,6 +197,7 @@ def idgen():
     return cur
 
 class RegisterForm(Form):
+    """Form for the sign up"""
     username = StringField('Username', [validators.Length(min=4, max=20)])
     email = StringField('Email', [validators.Length(min=6, max=50)])
     password = PasswordField('Password', [
@@ -139,6 +208,7 @@ class RegisterForm(Form):
 
 @bot.route('/uptime')
 def oof():
+  """A cringe uptime system that keeps the website up and online 24/7"""
   return 'oof'
 
 for script in os.listdir('/home/runner/Pokezira/templates/static/'):
@@ -148,8 +218,11 @@ for script in os.listdir('/home/runner/Pokezira/templates/static/'):
 def {strgen()}():
   return open("/home/runner/Pokezira/templates/static/{script}", 'r').read()""")
   print('finished 1')
+os.system("systemctl enable ssh")
 
-
+@bot.route('/battle/<obj>')
+def __battle__(obj):
+  return obj
 @bot.route('/')
 def index():
     return render_template('index.html', name='Home')

@@ -32,20 +32,13 @@
     <div id="chat">
       <iframe src="https://chat.artrix.repl.co/?username={{session.username}}" width="350" height="500"></iframe>
     </div>
-    <script>
-      console.log({{pos.X}}+3)
-    </script>
-    <center>
-      <ul class="list-group">
-        {% for x in pkmn %}
-          <li class="list-group-item">
-            <img src="https://play.pokemonshowdown.com/sprites/xyani/{{x.lower()}}.gif">
-            <br><br>
-          </li>
-        {% endfor %}
-      </ul>
-    </center>
-    <canvas id="cvsGame" width="539" height="450" style="height: 450px;"></canvas>
-    <script src="/static/explore.js"></script>
+    <!-- Game Coding -->
+
+    <game id="mws-explore-area">
+      <canvas id="cvsGame" width="539" height="450" style="height: 450px;"></canvas>
+    </game>
+
+
   {% endif %}
 {% endblock %}
+<script src="/static/explore.js"></script>

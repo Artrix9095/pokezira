@@ -160,5 +160,41 @@
         "Region": "Organon",
         "Town": "Tremum Town",
         "New": false
+    },
+    "oz6H6a_f7": {
+        "X": 0,
+        "Y": 0,
+        "Quests": [],
+        "Badges": [],
+        "Region": "Organon",
+        "Town": "Tremum Town",
+        "New": true
+    },
+    "59w}+25By": {
+        "X": 0,
+        "Y": 0,
+        "Quests": [],
+        "Badges": [],
+        "Region": "Organon",
+        "Town": "Tremum Town",
+        "New": false
+    },
+    "i;!b\"p<\">": {
+        "X": 0,
+        "Y": 0,
+        "Quests": [],
+        "Badges": [],
+        "Region": "Organon",
+        "Town": "Tremum Town",
+        "New": false
+    },
+    "#GP7>C5g$": {
+        "X": 0,
+        "Y": 0,
+        "Quests": [],
+        "Badges": [],
+        "Region": "Organon",
+        "Town": "Tremum Town",
+        "New": false
     }
 }

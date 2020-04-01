@@ -1,3 +1,5 @@
+
+
 function update() {
   if( bLoading ) {
     if( ImageResourceLoadedCount == screenResources.length )
